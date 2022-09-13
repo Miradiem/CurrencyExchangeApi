@@ -1,4 +1,4 @@
-﻿using CurrencyExchangeApi.App;
+﻿using CurrencyExchangeApi.CurrencyExchange;
 using Newtonsoft.Json;
 using System.Text;
 

@@ -1,9 +1,9 @@
 ﻿using CurrencyExchangeApi.Api;
-using CurrencyExchangeApi.Cache;
+using CurrencyExchangeApi.App;
 
-namespace CurrencyExchangeApi.App
+namespace CurrencyExchangeApi.CurrencyExchange
 {
-    public class CurrencyExchange
+    public class Conversion
     {
         private readonly ILRUCache _cache;
         private readonly string _baseCurrency;
@@ -11,7 +11,7 @@ namespace CurrencyExchangeApi.App
         private readonly int _baseAmount;
         
 
-        public CurrencyExchange(ILRUCache cache, ExchangeQuery query)
+        public Conversion(ILRUCache cache, QuoteQuery query)
         {
             _cache = cache;
             _baseCurrency = query.BaseCurrency;
@@ -25,7 +25,7 @@ namespace CurrencyExchangeApi.App
 
             if (exchangeRates is null)
             {
-                exchangeRates = await new ExchangeApi(
+                exchangeRates = await new ExchangeRatesApi(
                 new ApiClient("https://api.exchangerate-api.com/v4/latest")
                 .Create(_baseCurrency))
                 .Rates();

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace CurrencyExchangeApi.Validation
+namespace CurrencyExchangeApi.App
 {
     public static class QueryExtensions
     {

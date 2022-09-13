@@ -6,7 +6,7 @@ namespace CurrencyExchangeApi.Logging
     public static class Log
     {
         private static readonly Logger _logger = new LoggerConfiguration()
-                .WriteTo.File("Logging/Logs/log.txt")
+                .WriteTo.File("Logging/log.txt")
                 .CreateLogger();
 
         public static void Info(string message) =>

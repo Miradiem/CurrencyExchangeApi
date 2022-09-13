@@ -1,6 +1,4 @@
-using CurrencyExchangeApi.Cache;
-using CurrencyExchangeApi.Middleware;
-using CurrencyExchangeApi.Validation;
+using CurrencyExchangeApi.App;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-﻿namespace CurrencyExchangeApi.App
+﻿namespace CurrencyExchangeApi.CurrencyExchange
 {
     public class Exchange
     {

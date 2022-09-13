@@ -1,9 +1,9 @@
 ﻿using CurrencyExchangeApi.Api;
-using CurrencyExchangeApi.Cache;
+using CurrencyExchangeApi.App;
 using FluentAssertions;
 using System.Collections.Generic;
 
-namespace CurrecyExchange.Tests.Cache
+namespace CurrecyExchange.Tests.App
 {
     public class CacheTests
     {

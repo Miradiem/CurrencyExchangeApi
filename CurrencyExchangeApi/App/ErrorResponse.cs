@@ -1,4 +1,4 @@
-﻿namespace CurrencyExchangeApi.Middleware
+﻿namespace CurrencyExchangeApi.App
 {
     public class ErrorResponse
     {

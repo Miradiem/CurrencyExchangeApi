@@ -2,11 +2,11 @@
 
 namespace CurrencyExchangeApi.Api
 {
-    public class ExchangeApi
+    public class ExchangeRatesApi
     {
         private readonly IFlurlClient _client;
 
-        public ExchangeApi(IFlurlClient client)
+        public ExchangeRatesApi(IFlurlClient client)
         {
             _client = client;
         }

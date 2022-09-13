@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 
-namespace CurrencyExchangeApi.Middleware
+namespace CurrencyExchangeApi.App
 {
     public class ExceptionHandling
     {

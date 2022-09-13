@@ -1,4 +1,4 @@
-﻿using CurrencyExchangeApi.Middleware;
+﻿using CurrencyExchangeApi.App;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CurrecyExchange.Tests.Middleware
+namespace CurrecyExchange.Tests.App
 {
     public class ExceptionHandlingTests
     {

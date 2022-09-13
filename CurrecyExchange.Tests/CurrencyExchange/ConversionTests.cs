@@ -1,11 +1,11 @@
 ﻿using CurrencyExchangeApi.App;
-using CurrencyExchangeApi.Cache;
-using System.Threading.Tasks;
+using CurrencyExchangeApi.CurrencyExchange;
 using FluentAssertions;
+using System.Threading.Tasks;
 
-namespace CurrecyExchange.Tests.App
+namespace CurrecyExchange.Tests.CurrencyExchange
 {
-    public class CurrencyExchangeTests
+    public class ConversionTests
     {
         public async Task ShouldGetExchange()
         {
@@ -14,15 +14,15 @@ namespace CurrecyExchange.Tests.App
             exchange.Should().NotBeNull();
         }
 
-        private CurrencyExchange CreateSut()
+        private Conversion CreateSut()
         {
             var cache = new LRUCache();
-            var query = new ExchangeQuery();
+            var query = new QuoteQuery();
             query.BaseCurrency = "USD";
             query.QuoteCurrency = "GBP";
             query.BaseAmount = 100;
 
-            return new CurrencyExchange(cache, query);  
+            return new Conversion(cache, query);  
         }
     }
 }

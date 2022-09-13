@@ -1,9 +1,9 @@
-﻿using CurrencyExchangeApi.App;
+﻿using CurrencyExchangeApi.CurrencyExchange;
 using FluentValidation;
 
-namespace CurrencyExchangeApi.Validation
+namespace CurrencyExchangeApi.App
 {
-    public class QueryValidator : AbstractValidator<ExchangeQuery>
+    public class QueryValidator : AbstractValidator<QuoteQuery>
     {
         private readonly List<string> _currencies = new List<string>() { "USD", "EUR", "GBP", "ILS" };
 

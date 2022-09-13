@@ -1,6 +1,6 @@
 ﻿using CurrencyExchangeApi.Api;
 
-namespace CurrencyExchangeApi.Cache
+namespace CurrencyExchangeApi.App
 {
     public class LRUCache : ILRUCache
     {

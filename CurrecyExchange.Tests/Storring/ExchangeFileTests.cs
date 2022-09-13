@@ -1,4 +1,4 @@
-﻿using CurrencyExchangeApi.App;
+﻿using CurrencyExchangeApi.CurrencyExchange;
 using CurrencyExchangeApi.Storring;
 using FluentAssertions;
 using System.IO;

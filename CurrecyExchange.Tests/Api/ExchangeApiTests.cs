@@ -3,7 +3,7 @@ using FluentAssertions;
 using Flurl.Http;
 using System.Threading.Tasks;
 
-namespace CurrecyExchange.Api.Tests
+namespace CurrecyExchange.Tests.Api
 {
     public class ExchangeApiTests
     {
@@ -14,9 +14,9 @@ namespace CurrecyExchange.Api.Tests
             rates.Should().NotBeNull();
         }
 
-        private static ExchangeApi CreateSut()
+        private static ExchangeRatesApi CreateSut()
         {
-            return new ExchangeApi(
+            return new ExchangeRatesApi(
                 new FlurlClient("https://api.exchangerate-api.com/v4/latest/usd"));
         }
     }
