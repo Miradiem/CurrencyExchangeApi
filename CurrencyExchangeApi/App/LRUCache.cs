@@ -35,17 +35,15 @@ namespace CurrencyExchangeApi.App
 
                 _cache[key] = (node.node, value);
             }
-            else
-            {
-                if (_cache.Count >= _capacity)
-                {
-                    var removeKey = _list.Last!.Value;
-                    _cache.Remove(removeKey);
-                    _list.RemoveLast();
-                }
 
-                _cache.Add(key, (_list.AddFirst(key), value));
+            if (_cache.Count >= _capacity)
+            {
+                var removeKey = _list.Last!.Value;
+                _cache.Remove(removeKey);
+                _list.RemoveLast();
             }
-        }      
+            
+            _cache.Add(key, (_list.AddFirst(key), value));
+        }
     }
 }

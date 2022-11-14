@@ -1,10 +1,10 @@
 ﻿using CurrencyExchangeApi.CurrencyExchange;
-using CurrencyExchangeApi.Storring;
+using CurrencyExchangeApi.Storage;
 using FluentAssertions;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CurrecyExchange.Tests.Storring
+namespace CurrecyExchange.Tests.Storage
 {
     public class ExchangeFileTests
     {

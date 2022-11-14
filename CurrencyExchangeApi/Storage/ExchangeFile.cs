@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace CurrencyExchangeApi.Storring
+namespace CurrencyExchangeApi.Storage
 {
     public class ExchangeFile
     {
@@ -27,7 +27,7 @@ namespace CurrencyExchangeApi.Storring
             }
         }
 
-        async Task WriteTextAsync(string filePath, string text)
+        private async Task WriteTextAsync(string filePath, string text)
         {
             byte[] encodedText = Encoding.Unicode.GetBytes(text);
 

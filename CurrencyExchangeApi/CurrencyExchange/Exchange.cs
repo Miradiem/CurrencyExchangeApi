@@ -2,8 +2,8 @@
 {
     public class Exchange
     {
-        public decimal ?ExchangeRate { get; set; }
+        public decimal ExchangeRate { get; set; }
 
-        public int ?QuoteAmount { get; set; }
+        public int QuoteAmount { get; set; }
     }
 }

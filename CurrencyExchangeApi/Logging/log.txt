@@ -1,4 +1,0 @@
-2022-09-13 09:17:57.871 +03:00 [INF] Calling https://api.exchangerate-api.com/v4/latest/USD
-2022-09-13 09:17:58.618 +03:00 [INF] Call status code: 200
-2022-09-13 11:38:57.764 +03:00 [INF] Calling https://api.exchangerate-api.com/v4/latest/USD
-2022-09-13 11:38:58.513 +03:00 [INF] Call status code: 200

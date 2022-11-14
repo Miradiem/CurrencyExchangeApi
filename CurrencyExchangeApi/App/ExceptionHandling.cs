@@ -24,29 +24,16 @@ namespace CurrencyExchangeApi.App
         }
         private async Task HandleException(HttpContext context, Exception exception)
         {
+            var responseMessage = "Something unexpected just happened. Please contact the administrator.";
+
             var response = context.Response;
             response.ContentType = "application/json";
+            response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var errorResponse = new ErrorResponse();
-
-            switch (exception)
-            {
-                case ApplicationException ex:
-                    response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    errorResponse.Message = ex.Message;
-                    break;
-                case KeyNotFoundException ex:
-                    response.StatusCode = (int)HttpStatusCode.NotFound;
-                    errorResponse.Message = ex.Message;
-                    break;
-                default:
-                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    errorResponse.Message = "Internal server errror. Check Logs";
-                    break;
-            }
-            Logging.Log.Error(exception.Message);
-            var result = JsonSerializer.Serialize(errorResponse);
+            var result = JsonSerializer.Serialize(responseMessage);
             await context.Response.WriteAsync(result);
+
+            Logs.Log.Error(exception.Message);
         }
     }
 }

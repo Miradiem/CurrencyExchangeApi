@@ -1,12 +1,15 @@
+using CurrencyExchangeApi.Api;
 using CurrencyExchangeApi.App;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<ILRUCache, LRUCache>();
 builder.Services.AddValidatorsFromAssemblyContaining<QueryValidator>();
-
+builder.Services.AddScoped<IRates, LatestRates>();
+builder.Services.Decorate<IRates, CachedRates>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

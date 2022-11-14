@@ -1,5 +1,4 @@
-﻿using CurrencyExchangeApi.CurrencyExchange;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace CurrencyExchangeApi.App
 {

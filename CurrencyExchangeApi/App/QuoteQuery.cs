@@ -1,4 +1,4 @@
-﻿namespace CurrencyExchangeApi.CurrencyExchange
+﻿namespace CurrencyExchangeApi.App
 {
     public class QuoteQuery
     {

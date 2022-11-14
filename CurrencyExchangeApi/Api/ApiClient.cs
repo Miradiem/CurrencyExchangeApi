@@ -1,7 +1,7 @@
 ﻿using Flurl;
 using Flurl.Http;
 
-namespace CurrencyExchangeApi.App
+namespace CurrencyExchangeApi.Api
 {
     public class ApiClient
     {
@@ -18,11 +18,11 @@ namespace CurrencyExchangeApi.App
 
             client.Settings.BeforeCall = (call) =>
             {
-                Logging.Log.Info($"Calling {call.HttpRequestMessage.RequestUri}");
+                Logs.Log.Info($"Calling {call.HttpRequestMessage.RequestUri}");
             };
             client.Settings.AfterCall = (call) =>
             {
-                Logging.Log.Info($"Call status code: {call.Response.StatusCode}");
+                Logs.Log.Info($"Call status code: {call.Response.StatusCode}");
             };
             
             return client;

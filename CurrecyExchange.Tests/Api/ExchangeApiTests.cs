@@ -14,9 +14,9 @@ namespace CurrecyExchange.Tests.Api
             rates.Should().NotBeNull();
         }
 
-        private static ExchangeRatesApi CreateSut()
+        private static RatesApi CreateSut()
         {
-            return new ExchangeRatesApi(
+            return new RatesApi(
                 new FlurlClient("https://api.exchangerate-api.com/v4/latest/usd"));
         }
     }

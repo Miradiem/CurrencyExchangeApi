@@ -1,5 +1,7 @@
-﻿using CurrencyExchangeApi.App;
-using CurrencyExchangeApi.Storring;
+﻿using CurrencyExchangeApi.Api;
+using CurrencyExchangeApi.App;
+using CurrencyExchangeApi.Storage;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyExchangeApi.CurrencyExchange
@@ -8,32 +10,39 @@ namespace CurrencyExchangeApi.CurrencyExchange
     [ApiController]
     public class ExchangeController : ControllerBase
     {
-        private readonly ILRUCache _cache;
-        private readonly QueryValidator _validator;
-       
-        public ExchangeController(ILRUCache cache, QueryValidator validator)
+        private readonly IRates _rates;
+        private readonly IValidator<QuoteQuery> _validator;
+
+        public ExchangeController(IRates rates, IValidator<QuoteQuery> validator)
         {
-            _cache = cache;
+            _rates = rates;
             _validator = validator;
         }
 
         [HttpGet("/quote")]
         public async Task<IActionResult> Get([FromQuery] QuoteQuery query)
         {
-            var result = await _validator.ValidateAsync(query);
-            if (!result.IsValid)
+            var validation = await _validator.ValidateAsync(query);
+
+            if (!validation.IsValid)
             {
-                result.AddToModelState(ModelState);
-                return ValidationProblem(ModelState);
+                return BadRequest(validation.Errors?.Select(e => new ValidationResult()
+                {
+                    Code = e.ErrorCode,
+                    PropertyName = e.PropertyName,
+                    Message = e.ErrorMessage
+                }));
             }
 
-            var exchange = await new Conversion(_cache, query).GetExchange();
-            if (exchange.ExchangeRate is null && exchange.QuoteAmount is null)
-            {
-                throw new KeyNotFoundException("Exchange not found.");
-            }
+            var rates = await _rates.GetRates(query.BaseCurrency);
+            var exchange = new Conversion().GetExchange(rates, query.QuoteCurrency, query.BaseAmount);
 
-            await new ExchangeFile("Storring/exchange-data.txt").Save(exchange);
+            if (exchange is null)
+            {
+                throw new Exception();
+            }
+            
+            await new ExchangeFile("Storage/exchange-data.txt").Save(exchange);
 
             return Ok(exchange);
         }
