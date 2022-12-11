@@ -24,7 +24,7 @@ namespace CurrencyExchangeApi.Api
                 _cache.Put(baseCurrency, exchangeRates);
             }
 
-            return exchangeRates;
+            return (ExchangeRates)exchangeRates;
         }
     }
 }

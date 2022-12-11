@@ -24,7 +24,7 @@ namespace CurrencyExchangeApi.Api
             {
                 Logs.Log.Info($"Call status code: {call.Response.StatusCode}");
             };
-            
+
             return client;
         }
     }

@@ -1,12 +1,10 @@
-﻿using CurrencyExchangeApi.Api;
-
-namespace CurrencyExchangeApi.App
+﻿namespace CurrencyExchangeApi.App
 {
     public interface ILRUCache
     {
-        public ExchangeRates Get(string key);
+        public object Get(string key);
 
-        public void Put(string key, ExchangeRates value);
+        public void Put(string key, object value);
 
     }
 }

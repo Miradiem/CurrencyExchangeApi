@@ -1,5 +1,4 @@
 ﻿using CurrencyExchangeApi.Api;
-using CurrencyExchangeApi.App;
 
 namespace CurrencyExchangeApi.CurrencyExchange
 {

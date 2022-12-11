@@ -6,7 +6,7 @@ namespace CurrencyExchangeApi.Storage
 {
     public class ExchangeFile
     {
-        private SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
         private readonly string _file;
 
         public ExchangeFile(string file)

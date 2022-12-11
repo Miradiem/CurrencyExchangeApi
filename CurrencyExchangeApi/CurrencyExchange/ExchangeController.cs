@@ -24,7 +24,7 @@ namespace CurrencyExchangeApi.CurrencyExchange
         {
             var validation = await _validator.ValidateAsync(query);
 
-            if (!validation.IsValid)
+            if (validation.IsValid is false)
             {
                 return BadRequest(validation.Errors?.Select(e => new ValidationResult()
                 {

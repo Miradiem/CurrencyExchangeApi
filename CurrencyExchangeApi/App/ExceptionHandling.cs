@@ -6,6 +6,7 @@ namespace CurrencyExchangeApi.App
     public class ExceptionHandling
     {
         private readonly RequestDelegate _next;
+
         public ExceptionHandling(RequestDelegate next)
         {
             _next = next;
@@ -24,12 +25,11 @@ namespace CurrencyExchangeApi.App
         }
         private async Task HandleException(HttpContext context, Exception exception)
         {
-            var responseMessage = "Something unexpected just happened. Please contact the administrator.";
-
             var response = context.Response;
             response.ContentType = "application/json";
             response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
+            
+            var responseMessage = "Something unexpected just happened. Please contact the administrator.";
             var result = JsonSerializer.Serialize(responseMessage);
             await context.Response.WriteAsync(result);
 

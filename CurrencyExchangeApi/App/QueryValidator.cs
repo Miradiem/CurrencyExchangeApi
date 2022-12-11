@@ -8,7 +8,6 @@ namespace CurrencyExchangeApi.App
 
         public QueryValidator()
         {
-
             RuleFor(x => x.BaseCurrency)
                 .Must(x => _currencies.Contains(x))
                 .WithMessage("Wrong input. Viable currencies: " + String.Join(",", _currencies) + ".");
@@ -20,8 +19,6 @@ namespace CurrencyExchangeApi.App
             RuleFor(x => x.BaseAmount)
                 .GreaterThanOrEqualTo(1)
                 .WithMessage("Can't be less than 1.");
-        }
-
-        
-} 
+        } 
+    } 
 }

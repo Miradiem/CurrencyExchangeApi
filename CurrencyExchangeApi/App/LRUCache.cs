@@ -1,22 +1,23 @@
-﻿using CurrencyExchangeApi.Api;
-
-namespace CurrencyExchangeApi.App
+﻿namespace CurrencyExchangeApi.App
 {
     public class LRUCache : ILRUCache
     {
-        private int _capacity = 4;
-        private Dictionary<string, (LinkedListNode<string> node, ExchangeRates value)> _cache;
-        private LinkedList<string> _list;
+        private const int _capacity = 4;
+        private readonly Dictionary<string, (LinkedListNode<string> node, object value)> _cache;
+        private readonly LinkedList<string> _list;
 
         public LRUCache()
         {
-            _cache = new Dictionary<string, (LinkedListNode<string> node, ExchangeRates value)>(_capacity);
+            _cache = new Dictionary<string, (LinkedListNode<string> node, object value)>(_capacity);
             _list = new LinkedList<string>();
         }
 
-        public ExchangeRates Get(string key)
+        public object Get(string key)
         {
-            if (!_cache.ContainsKey(key)) return null;
+            if (!_cache.ContainsKey(key))
+            {
+                return null;
+            } 
                 
             var node = _cache[key];
             _list.Remove(node.node);
@@ -25,7 +26,7 @@ namespace CurrencyExchangeApi.App
             return node.value;
         }
 
-        public void Put(string key, ExchangeRates value)
+        public void Put(string key, object value)
         {
             if (_cache.ContainsKey(key))
             {

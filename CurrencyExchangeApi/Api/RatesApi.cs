@@ -21,7 +21,7 @@ namespace CurrencyExchangeApi.Api
             {
                 throw new Exception();
             }
-            
+                
             return exchangeRates;
         }
     }

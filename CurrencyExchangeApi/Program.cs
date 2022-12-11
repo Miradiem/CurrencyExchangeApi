@@ -1,7 +1,6 @@
 using CurrencyExchangeApi.Api;
 using CurrencyExchangeApi.App;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
