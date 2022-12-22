@@ -2,14 +2,15 @@
 {
     public class LRUCache : ILRUCache
     {
-        private const int _capacity = 4;
+        private readonly int _capacity;
         private readonly Dictionary<string, (LinkedListNode<string> node, object value)> _cache;
         private readonly LinkedList<string> _list;
 
-        public LRUCache()
+        public LRUCache(int capacity)
         {
             _cache = new Dictionary<string, (LinkedListNode<string> node, object value)>(_capacity);
             _list = new LinkedList<string>();
+            _capacity = capacity;
         }
 
         public object Get(string key)

@@ -2,6 +2,7 @@
 using CurrencyExchangeApi.App;
 using CurrencyExchangeApi.Storage;
 using FluentValidation;
+using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyExchangeApi.CurrencyExchange
@@ -23,7 +24,6 @@ namespace CurrencyExchangeApi.CurrencyExchange
         public async Task<IActionResult> Get([FromQuery] QuoteQuery query)
         {
             var validation = await _validator.ValidateAsync(query);
-
             if (validation.IsValid is false)
             {
                 return BadRequest(validation.Errors?.Select(e => new ValidationResult()
@@ -36,7 +36,7 @@ namespace CurrencyExchangeApi.CurrencyExchange
 
             var rates = await _rates.GetRates(query.BaseCurrency);
             var exchange = new Conversion().GetExchange(rates, query.QuoteCurrency, query.BaseAmount);
-
+            
             if (exchange is null)
             {
                 throw new Exception();

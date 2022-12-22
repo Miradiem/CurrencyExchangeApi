@@ -5,9 +5,12 @@ using FluentValidation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<ILRUCache, LRUCache>();
+builder.Services.AddSingleton<ILRUCache, LRUCache>
+    (serviceProvider => new LRUCache(4));
 builder.Services.AddValidatorsFromAssemblyContaining<QueryValidator>();
-builder.Services.AddScoped<IRates, LatestRates>();
+builder.Services.AddScoped<IRates, LatestRates>
+    (serviceProvider => new LatestRates
+    (new ApiClient("https://api.exchangerate-api.com/v4/latest")));
 builder.Services.Decorate<IRates, CachedRates>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

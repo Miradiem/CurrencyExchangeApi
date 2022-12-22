@@ -1,13 +1,29 @@
-﻿namespace CurrencyExchangeApi.Api
+﻿using Flurl.Http;
+
+namespace CurrencyExchangeApi.Api
 {
     public class LatestRates : IRates
     {
-        private const string _url = "https://api.exchangerate-api.com/v4/latest";
+        private readonly ApiClient _client;
 
-        public async Task<ExchangeRates> GetRates(string baseCurrency) =>
-            await new RatesApi(
-              new ApiClient(_url)
-              .Create(baseCurrency))
-              .Rates();
+        public LatestRates(ApiClient client)
+        {
+            _client = client;
+        }
+
+        public async Task<ExchangeRates> GetRates(string baseCurrency)
+        {
+            var exchangeRates = await _client
+                .Create(baseCurrency)
+                .Request()
+                .GetJsonAsync<ExchangeRates>();
+
+            if (exchangeRates.Rates.Any() is false)
+            {
+                throw new Exception();
+            }
+
+            return exchangeRates;
+        }       
     }
 }

@@ -21,7 +21,7 @@ namespace CurrecyExchange.Tests.App
             };
             exchangeRates.Rates.Add("USD", 1);
 
-            var cache = new LRUCache();
+            var cache = new LRUCache(4);
             cache.Put("USD", exchangeRates);
 
             return cache;

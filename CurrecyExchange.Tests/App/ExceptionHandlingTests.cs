@@ -18,10 +18,6 @@ namespace CurrecyExchange.Tests.App
                 {
                     webBuilder
                         .UseTestServer()
-                        .ConfigureServices(services =>
-                        {
-                            //
-                        })
                         .Configure(app =>
                         {
                             app.UseMiddleware<ExceptionHandling>();

@@ -20,11 +20,7 @@ namespace CurrecyExchange.Tests.Storage
             });
 
             var result = await File.ReadAllTextAsync(file);
-            result.Should().NotBeNullOrEmpty();
-                
+            result.Should().NotBeNullOrEmpty();     
         }
-       
-
-
     }
 }
