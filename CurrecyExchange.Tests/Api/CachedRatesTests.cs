@@ -32,8 +32,8 @@ namespace CurrecyExchange.Tests.Api
                     .ForCallsTo("https://testingcall.com/test/USD")
                     .RespondWithJson(exchangeRates);
 
-                var sut = CreateSut();
-                sut.Result.Rates.Should().Contain("USD", 1);
+                var result = CreateSut();
+                result.Result.Rates.Should().Contain("USD", 1);
 
                 _output.WriteLine("{0}", "\"USD\", 1");
             }

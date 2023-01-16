@@ -18,9 +18,8 @@ namespace CurrecyExchange.Tests.Api
         [Fact]
         public void ShouldCreateApiClient()
         {
-            var sut = CreateSut();
-
-            sut.BaseUrl.Should().Be("https://testingcall.com/test");
+            var result = CreateSut();
+            result.BaseUrl.Should().Be("https://testingcall.com/test");
 
             _output.WriteLine("Client: {0}", "https://testingcall.com/test");
         }

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using System.Net;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace CurrecyExchange.Tests.App
 {
     public class ExceptionHandlingTests
     {
+        [Fact]
         public async Task ShouldHandleException()
         {
             using var host = await new HostBuilder()

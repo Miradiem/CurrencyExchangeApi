@@ -3,11 +3,13 @@ using CurrencyExchangeApi.Storage;
 using FluentAssertions;
 using System.IO;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace CurrecyExchange.Tests.Storage
 {
     public class ExchangeFileTests
     {
+        [Fact]
         public async Task ShouldStore()
         {
             var file = Path.GetTempFileName();

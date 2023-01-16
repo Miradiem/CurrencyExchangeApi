@@ -1,8 +1,6 @@
 ﻿using CurrencyExchangeApi.Api;
 using CurrencyExchangeApi.App;
 using FluentAssertions;
-using Moq;
-using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,33 +9,47 @@ namespace CurrecyExchange.Tests.App
     public class CacheTests
     {
         private readonly ITestOutputHelper _output;
-        private readonly Mock<ILRUCache> _cacheMock;
 
         public CacheTests(ITestOutputHelper output)
         {
             _output = output;
-            _cacheMock = new Mock<ILRUCache>();
         }
 
         [Fact]
-        public void ShouldReceiveRatesCache()
+        public void ShouldCacheTwoObjects()
         {
             var sut = CreateSut();
 
-            var result = sut.Get("USD");
+            var usdResult = (ExchangeRates)sut.Get("USD");
+            var gbpResult = (ExchangeRates)sut.Get("GBP");
+            var eurResult = (ExchangeRates)sut.Get("EUR");
 
-            result.Should().NotBeNull();
+            usdResult.Should().BeNull();
+            gbpResult.Rates.Should().ContainKey("GBP");
+            eurResult.Rates.Should().ContainKey("EUR");
+
+            _output.WriteLine("{0}",
+                "1.USD out of capacity\n" +
+                "2.GBP exists\n" +
+                "3.Eur exists");
         }
 
         private LRUCache CreateSut()
         {
-            var exchangeRates = new ExchangeRates();
-            exchangeRates.Rates.Add("USD", 1);
+            var usdRates = new ExchangeRates();
+            var gbpRates = new ExchangeRates();
+            var eurRates = new ExchangeRates();
 
-            var cache = _cacheMock.Object;
-            cache.Put("USD", exchangeRates);
+            usdRates.Rates.Add("USD", 1);
+            gbpRates.Rates.Add("GBP", 2);
+            eurRates.Rates.Add("EUR", 3);
 
-            return (LRUCache)cache;
+            var cache = new LRUCache(2);
+            cache.Put("USD", usdRates);
+            cache.Put("GBP", gbpRates);
+            cache.Put("EUR", eurRates);
+
+            return cache;
         }
     }
 }

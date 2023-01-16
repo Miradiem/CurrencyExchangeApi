@@ -1,5 +1,4 @@
 ﻿using CurrencyExchangeApi.App;
-using CurrencyExchangeApi.CurrencyExchange;
 using FluentValidation.TestHelper;
 using System.Collections.Generic;
 using Xunit;
