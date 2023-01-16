@@ -1,38 +1,47 @@
-﻿using Flurl.Http;
+﻿using CurrencyExchangeApi.Api;
+using FluentAssertions;
 using Flurl.Http.Testing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
-using CurrencyExchangeApi.Api;
+using Xunit.Abstractions;
 
 namespace CurrecyExchange.Tests.Api
 {
     public class LatestRatesTests
     {
-        private readonly IRates _rates;
+        private readonly ITestOutputHelper _output;
+
+        public LatestRatesTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
 
         [Fact]
-        public async Task ShouldGetRates()
+        public void ShouldGetLatestRates()
         {
-            var testRates = _rates.GetRates("USD");
-
-
             using (var httpTest = new HttpTest())
             {
-                var ratesTest = "'rates': '{'USD': '1'}'";
-                httpTest
-                    .ForCallsTo("*https://testingcall.com/test*")
-                    .WithVerb("Get")
-                    .RespondWith(ratesTest, 200);
+                var exchangeRates = new ExchangeRates();
+                exchangeRates.Rates.Add("USD", 1);
 
-                var result = await "https://testingcall.com/test".GetAsync();
-                Assert.Contains("USD", await result.GetStringAsync());
+                httpTest
+                    .ForCallsTo("https://testingcall.com/test/USD")
+                    .RespondWithJson(exchangeRates);
+
+                var sut = CreateSut();
+
+                sut.Result.Rates.Should().Contain("USD", 1);
+
+                _output.WriteLine("{0}", "\"USD\", 1");
             }
-           
         }
+
+        private Task<ExchangeRates> CreateSut()
+        {
+            var client = new ApiClient("https://testingcall.com/test");
+
+            return new LatestRates(client).GetRates("USD");
+        }
+           
     }
 }

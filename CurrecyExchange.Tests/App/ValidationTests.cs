@@ -8,8 +8,6 @@ namespace CurrecyExchange.Tests.Validation
 {
     public class ValidationTests
     {
-       
-
         [Theory, MemberData(nameof(ExchangeQueryTestData))]
         public void ShouldValidateQuery(QuoteQuery query)
         {
@@ -32,10 +30,6 @@ namespace CurrecyExchange.Tests.Validation
         private QueryValidator CreateSut()
         {
             return new QueryValidator();
-        }
-
-        
-
-        
+        } 
     }
 }
