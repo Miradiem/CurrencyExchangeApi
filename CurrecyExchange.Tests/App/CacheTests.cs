@@ -2,19 +2,11 @@
 using CurrencyExchangeApi.App;
 using FluentAssertions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace CurrecyExchange.Tests.App
 {
     public class CacheTests
     {
-        private readonly ITestOutputHelper _output;
-
-        public CacheTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void ShouldCacheTwoObjects()
         {
@@ -27,11 +19,6 @@ namespace CurrecyExchange.Tests.App
             usdResult.Should().BeNull();
             gbpResult.Rates.Should().ContainKey("GBP");
             eurResult.Rates.Should().ContainKey("EUR");
-
-            _output.WriteLine("{0}",
-                "1.USD out of capacity\n" +
-                "2.GBP exists\n" +
-                "3.Eur exists");
         }
 
         private LRUCache CreateSut()

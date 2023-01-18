@@ -1,13 +1,11 @@
 ﻿using AutoFixture;
+using CurrencyExchangeApi.Api;
 using CurrencyExchangeApi.App;
 using CurrencyExchangeApi.CurrencyExchange;
 using FluentAssertions;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +13,38 @@ namespace CurrecyExchange.Tests.CurrencyExchange
 {
     public class ExchangeControllerTests
     {
-        private readonly Mock<Exchange> _exchangeMock;
-        private Fixture _fixture;
-        private ExchangeController _controller;
+        private readonly Mock<IRates> _mockRates;
+        private readonly Fixture _fixture;
+        private readonly IValidator<QuoteQuery> _validator;
+        private readonly ExchangeController _controller;
         
-
         public ExchangeControllerTests()
         {
-            _exchangeMock = new Mock<Exchange>();
+            _mockRates = new Mock<IRates>();
             _fixture = new Fixture();
+            _validator = new QueryValidator();
+            _controller = new ExchangeController(_mockRates.Object, _validator);
         }
+
         [Fact]
         public async Task ShouldGetExchange()
         {
+            var exhangeRates = _fixture.Create<Task<ExchangeRates>>();
+            exhangeRates.Result.Rates.Add("USD", 1);
 
-            var q = new QuoteQuery()
+            _mockRates.Setup(rates => rates.GetRates("USD"))
+                .Returns(exhangeRates);
+                 
+            var query = new QuoteQuery() 
             {
                 BaseCurrency = "USD",
-                QuoteCurrency = "GBP",
-                BaseAmount = 1
+                QuoteCurrency = "USD",
+                BaseAmount = 100
             };
-            //_controller = new ExchangeController()
-            var result = await _controller.Get(q);
-            //var obj = result as ObjectResult;
 
-            result.Should().Be(200);
+            var result = await _controller.Get(query) as ObjectResult;
+
+            result.StatusCode.Should().Be(200);
         }
     }
 }

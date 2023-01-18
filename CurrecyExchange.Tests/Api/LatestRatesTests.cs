@@ -1,21 +1,12 @@
 ﻿using CurrencyExchangeApi.Api;
 using FluentAssertions;
 using Flurl.Http.Testing;
-using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace CurrecyExchange.Tests.Api
 {
     public class LatestRatesTests
     {
-        private readonly ITestOutputHelper _output;
-
-        public LatestRatesTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void ShouldGetLatestRates()
         {
@@ -28,19 +19,18 @@ namespace CurrecyExchange.Tests.Api
                     .ForCallsTo("https://testingcall.com/test/USD")
                     .RespondWithJson(exchangeRates);
 
-                var result = CreateSut();
-                result.Result.Rates.Should().Contain("USD", 1);
+                var sut = CreateSut();
+                var result = sut.GetRates("USD");
 
-                _output.WriteLine("{0}", "\"USD\", 1");
+                result.Result.Rates.Should().Contain("USD", 1);
             }
         }
 
-        private Task<ExchangeRates> CreateSut()
+        private LatestRates CreateSut()
         {
             var client = new ApiClient("https://testingcall.com/test");
 
-            return new LatestRates(client).GetRates("USD");
+            return new LatestRates(client);
         }
-           
     }
 }

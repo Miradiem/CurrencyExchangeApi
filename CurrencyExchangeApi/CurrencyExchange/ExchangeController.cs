@@ -1,8 +1,6 @@
 ﻿using CurrencyExchangeApi.Api;
 using CurrencyExchangeApi.App;
-using CurrencyExchangeApi.Storage;
 using FluentValidation;
-using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyExchangeApi.CurrencyExchange
@@ -41,8 +39,6 @@ namespace CurrencyExchangeApi.CurrencyExchange
             {
                 throw new Exception();
             }
-            
-            await new ExchangeFile("Storage/exchange-data.txt").Save(exchange);
 
             return Ok(exchange);
         }

@@ -5,6 +5,5 @@
         public object Get(string key);
 
         public void Put(string key, object value);
-
     }
 }

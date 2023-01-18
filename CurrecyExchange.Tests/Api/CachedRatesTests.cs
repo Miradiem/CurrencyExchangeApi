@@ -3,20 +3,16 @@ using CurrencyExchangeApi.App;
 using FluentAssertions;
 using Flurl.Http.Testing;
 using Moq;
-using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace CurrecyExchange.Tests.Api
 {
     public class CachedRatesTests
     {
-        private readonly ITestOutputHelper _output;
         private readonly Mock<ILRUCache> _cacheMock;
 
-        public CachedRatesTests(ITestOutputHelper output)
+        public CachedRatesTests()
         {
-            _output = output;
             _cacheMock = new Mock<ILRUCache>();
         }
 
@@ -32,18 +28,18 @@ namespace CurrecyExchange.Tests.Api
                     .ForCallsTo("https://testingcall.com/test/USD")
                     .RespondWithJson(exchangeRates);
 
-                var result = CreateSut();
-                result.Result.Rates.Should().Contain("USD", 1);
+                var sut = CreateSut();
+                var result = sut.GetRates("USD");
 
-                _output.WriteLine("{0}", "\"USD\", 1");
+                result.Result.Rates.Should().Contain("USD", 1);
             }
         }
 
-        private Task<ExchangeRates> CreateSut()
+        private CachedRates CreateSut()
         {
             var latestRates = new LatestRates(new ApiClient("https://testingcall.com/test"));
 
-            return  new CachedRates(_cacheMock.Object, latestRates).GetRates("USD");
+            return new CachedRates(_cacheMock.Object, latestRates);
         }
     }
 }
