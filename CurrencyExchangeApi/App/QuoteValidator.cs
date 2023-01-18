@@ -2,11 +2,11 @@
 
 namespace CurrencyExchangeApi.App
 {
-    public class QueryValidator : AbstractValidator<QuoteQuery>
+    public class QuoteValidator : AbstractValidator<QuoteQuery>
     {
         private readonly List<string> _currencies = new List<string>() { "USD", "EUR", "GBP", "ILS" };
 
-        public QueryValidator()
+        public QuoteValidator()
         {
             RuleFor(x => x.BaseCurrency)
                 .Must(x => _currencies.Contains(x))

@@ -22,7 +22,7 @@ namespace CurrecyExchange.Tests.CurrencyExchange
         {
             _mockRates = new Mock<IRates>();
             _fixture = new Fixture();
-            _validator = new QueryValidator();
+            _validator = new QuoteValidator();
             _controller = new ExchangeController(_mockRates.Object, _validator);
         }
 

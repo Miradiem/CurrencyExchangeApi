@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<ILRUCache, LRUCache>
     (serviceProvider => new LRUCache(4));
-builder.Services.AddValidatorsFromAssemblyContaining<QueryValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<QuoteValidator>();
 builder.Services.AddScoped<IRates, LatestRates>
     (serviceProvider => new LatestRates
     (new ApiClient("https://api.exchangerate-api.com/v4/latest")));
