@@ -8,15 +8,15 @@ namespace CurrencyExchangeApi.App
 
         public QuoteValidator()
         {
-            RuleFor(x => x.BaseCurrency)
-                .Must(x => _currencies.Contains(x))
+            RuleFor(quote => quote.BaseCurrency)
+                .Must(quote => _currencies.Contains(quote))
                 .WithMessage("Wrong input. Viable currencies: " + String.Join(",", _currencies) + ".");
 
-            RuleFor(x => x.QuoteCurrency)
-                .Must(x => _currencies.Contains(x))
+            RuleFor(quote => quote.QuoteCurrency)
+                .Must(quote => _currencies.Contains(quote))
                 .WithMessage("Wrong input. Viable currencies: " + String.Join(",", _currencies) + ".");
 
-            RuleFor(x => x.BaseAmount)
+            RuleFor(quote => quote.BaseAmount)
                 .GreaterThanOrEqualTo(1)
                 .WithMessage("Can't be less than 1.");
         } 

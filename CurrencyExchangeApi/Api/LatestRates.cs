@@ -20,7 +20,7 @@ namespace CurrencyExchangeApi.Api
 
             if (exchangeRates.Rates.Any() is false)
             {
-                throw new Exception();
+                throw new NotImplementedException("Exchange rates not found.");
             }
 
             return exchangeRates;

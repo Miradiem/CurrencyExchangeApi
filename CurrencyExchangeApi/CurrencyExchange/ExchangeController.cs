@@ -9,11 +9,13 @@ namespace CurrencyExchangeApi.CurrencyExchange
     [ApiController]
     public class ExchangeController : ControllerBase
     {
+        private readonly ILogger<ExchangeController> _logger;
         private readonly IRates _rates;
         private readonly IValidator<QuoteQuery> _quoteValidator;
 
-        public ExchangeController(IRates rates, IValidator<QuoteQuery> quoteValidator)
+        public ExchangeController(ILogger<ExchangeController> logger, IRates rates, IValidator<QuoteQuery> quoteValidator)
         {
+            _logger = logger;
             _rates = rates;
             _quoteValidator = quoteValidator;
         }
@@ -21,23 +23,25 @@ namespace CurrencyExchangeApi.CurrencyExchange
         [HttpGet("/quote")]
         public async Task<IActionResult> Get([FromQuery] QuoteQuery query)
         {
+            _logger.LogInformation("Currency exchange executing...");
+
             var queryValidation = await _quoteValidator.ValidateAsync(query);
             if (queryValidation.IsValid is false)
             {
-                return BadRequest(queryValidation.Errors?.Select(e => new ValidationResult()
+                return BadRequest(queryValidation.Errors?.Select(error => new ValidationResult()
                 {
-                    Code = e.ErrorCode,
-                    PropertyName = e.PropertyName,
-                    Message = e.ErrorMessage
+                    Code = error.ErrorCode,
+                    PropertyName = error.PropertyName,
+                    Message = error.ErrorMessage
                 }));
             }
             
             var rates = await _rates.GetRates(query.BaseCurrency);
             var exchange = new Conversion().GetExchange(rates, query.QuoteCurrency, query.BaseAmount);
-            
-            if (exchange is null)
+
+            if (exchange.ExchangeRate == 0 || exchange.QuoteAmount == 0)
             {
-                throw new Exception();
+                throw new NotImplementedException("Exchange not found.");
             }
 
             return Ok(exchange);

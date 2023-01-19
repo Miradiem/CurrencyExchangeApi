@@ -5,6 +5,7 @@ using CurrencyExchangeApi.CurrencyExchange;
 using FluentAssertions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,16 +15,19 @@ namespace CurrecyExchange.Tests.CurrencyExchange
     public class ExchangeControllerTests
     {
         private readonly Mock<IRates> _mockRates;
+        private readonly Mock<ILogger<ExchangeController>> _mockLogger;
         private readonly Fixture _fixture;
         private readonly IValidator<QuoteQuery> _validator;
         private readonly ExchangeController _controller;
+
         
         public ExchangeControllerTests()
         {
             _mockRates = new Mock<IRates>();
+            _mockLogger = new Mock<ILogger<ExchangeController>>();
             _fixture = new Fixture();
             _validator = new QuoteValidator();
-            _controller = new ExchangeController(_mockRates.Object, _validator);
+            _controller = new ExchangeController(_mockLogger.Object, _mockRates.Object, _validator);
         }
 
         [Fact]
