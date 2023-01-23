@@ -20,22 +20,22 @@
                 return null;
             } 
                 
-            var node = _cache[key];
-            _list.Remove(node.node);
-            _list.AddFirst(node.node);
+            var keyNode = _cache[key];
+            _list.Remove(keyNode.node);
+            _list.AddFirst(keyNode.node);
 
-            return node.value;
+            return keyNode.value;
         }
 
         public void Put(string key, object value)
         {
             if (_cache.ContainsKey(key))
             {
-                var node = _cache[key];
-                _list.Remove(node.node);
-                _list.AddFirst(node.node);
+                var keyNode = _cache[key];
+                _list.Remove(keyNode.node);
+                _list.AddFirst(keyNode.node);
 
-                _cache[key] = (node.node, value);
+                _cache[key] = (keyNode.node, value);
             }
 
             if (_cache.Count >= _capacity)

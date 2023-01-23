@@ -26,9 +26,7 @@ namespace CurrecyExchange.Tests.Validation
                 new object[] { new QuoteQuery() { BaseCurrency = "", QuoteCurrency = "", BaseAmount = 0 }}
            };
 
-        private QuoteValidator CreateSut()
-        {
-            return new QuoteValidator();
-        } 
+        private QuoteValidator CreateSut() =>
+            new QuoteValidator();
     }
 }

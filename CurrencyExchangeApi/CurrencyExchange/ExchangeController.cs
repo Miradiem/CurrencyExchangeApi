@@ -39,11 +39,6 @@ namespace CurrencyExchangeApi.CurrencyExchange
             var rates = await _rates.GetRates(query.BaseCurrency);
             var exchange = new Conversion().GetExchange(rates, query.QuoteCurrency, query.BaseAmount);
 
-            if (exchange.ExchangeRate == 0 || exchange.QuoteAmount == 0)
-            {
-                throw new NotImplementedException("Exchange not found.");
-            }
-
             return Ok(exchange);
         }
     }

@@ -8,11 +8,9 @@ namespace CurrencyExchangeApi.Api
     {
         private readonly string _url;
 
-        public ApiClient(string url)
-        {
+        public ApiClient(string url) =>
             _url = url;
-        }
-
+        
         public IFlurlClient Create(string baseCurrency) =>
             new FlurlClient(_url.AppendPathSegment(baseCurrency));
     }
