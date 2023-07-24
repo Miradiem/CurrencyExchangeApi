@@ -2,6 +2,7 @@
 using CurrencyExchangeApi.App;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CurrencyExchangeApi.CurrencyExchange
 {
@@ -38,8 +39,9 @@ namespace CurrencyExchangeApi.CurrencyExchange
             
             var rates = await _rates.GetRates(query.BaseCurrency);
             var exchange = new Conversion().GetExchange(rates, query.QuoteCurrency, query.BaseAmount);
+            var jsonResult = JsonSerializer.Serialize(exchange);
 
-            return Ok(exchange);
+            return Ok(jsonResult);
         }
     }
 }
